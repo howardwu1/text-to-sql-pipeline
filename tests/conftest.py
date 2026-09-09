@@ -7,8 +7,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from init_db import SCHEMA_SQL  # noqa: E402
-from text_to_sql import config  # noqa: E402
+from init_db import SCHEMA_SQL
+
 
 @pytest.fixture()
 def file_db(tmp_path):                      # tmp_path = pytest's per-test temp dir

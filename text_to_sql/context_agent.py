@@ -9,7 +9,6 @@ SYSTEM_PROMPT = (
 from .few_shots import FEW_SHOT_EXAMPLES
 
 
-
 def get_schema_context(conn: sqlite3.Connection, pruned_tables: set[str]) -> str:
     """Pull PRAGMA table_info for all user tables, skipping meta-tables."""
     cursor = conn.cursor()

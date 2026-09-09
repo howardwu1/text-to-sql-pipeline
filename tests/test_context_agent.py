@@ -2,10 +2,8 @@
 import sqlite3
 from unittest.mock import patch
 
-from text_to_sql import config
 from text_to_sql.executor import execute_with_reflection, run_pipeline
 from text_to_sql.llm_client import extract_sql
-
 
 # ---------------------------------------------------------------- extraction
 
@@ -19,7 +17,7 @@ def test_extract_sql_fallback_bare_text():
 
 # ------------------------------------------------------- execution (direct SQL)
 
-def test_execution_success(file, mock_llm):
+def test_execution_success(file_db, mock_llm):
     results, error = execute_with_reflection(
         file_db, "SELECT COUNT(*) FROM customers;", "how many customers?"
     )

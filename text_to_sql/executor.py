@@ -31,7 +31,7 @@ def execute_with_reflection(
                 if attempt == retries - 1:
                     return None, (
                         f"Execution failed after maximum retries. "
-                        f"Final Error: {str(e)}"
+                        f"Final Error: {e!s}"
                     )
                 print(f"[reflection] Attempt {attempt + 1} failed: {e}. Repairing...")
                 sql_query = generate_sqlite_query(

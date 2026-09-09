@@ -1,7 +1,7 @@
 """Stage 2: unified inference via the AIHubMix gateway (ox-alpha model)."""
 import re
 
-from openai import OpenAI, APIConnectionError, APITimeoutError
+from openai import OpenAI
 
 from . import config
 

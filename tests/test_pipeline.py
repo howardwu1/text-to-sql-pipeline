@@ -1,6 +1,5 @@
 import sqlite3
 
-from text_to_sql import config
 from text_to_sql.executor import execute_with_reflection, run_pipeline
 from text_to_sql.llm_client import extract_sql
 
@@ -50,4 +49,5 @@ def test_pipeline_blocks_mutation(db_conn, monkeypatch):
                return_value="```sql\nDROP TABLE customers;\n```"):
         results, sql, error = run_pipeline("delete everything", ":memory:")
     assert results is None
+    assert "DROP TABLE" in sql 
     assert "guardrail" in error.lower()
