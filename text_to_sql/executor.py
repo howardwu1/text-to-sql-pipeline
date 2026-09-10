@@ -2,9 +2,9 @@
 import sqlite3
 
 from . import config
-from .llm_client import generate_sqlite_query
+
 # 1. Import extract_sql at the top of your file
-from .llm_client import extract_sql 
+from .llm_client import extract_sql, generate_sqlite_query
 from .safety import UnsafeQueryError, enforce_limit, validate
 
 REFLECTION_PROMPT_TEMPLATE = """The previous SQL query you generated caused an error. Please fix it.
