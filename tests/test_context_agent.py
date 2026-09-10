@@ -51,9 +51,14 @@ def test_reflection_loop_gives_up_after_max_retries(file_db, mock_llm):
 
 def test_empty_result_is_success(file_db, mock_llm):
     """Zero rows is a valid outcome, not an error."""
-    results, error = execute_with_reflection(
-        file_db, "SELECT * customers WHERE customer_id = 99999;", "find 99999"
-    )
+    # Define a repaired query that actually keeps the empty-result filter!
+    repaired_query = "```sql\nSELECT * FROM customers WHERE customer_id = 99999;\n```"
+    
+    with patch("text_to_sql.executor.generate_sqlite_query", return_value=repaired_query):
+        results, error = execute_with_reflection(
+            file_db, "SELECT * customers WHERE customer_id = 99999;", "find 99999"
+        )
+        
     assert error is None
     assert results == []
 

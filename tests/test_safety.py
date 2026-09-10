@@ -31,7 +31,7 @@ def test_limit_appended():
 
 def test_existing_limit_preserved():
     sql = enforce_limit("SELECT * FROM customers LIMIT 5;")
-    assert sql == "SELECT * FROM customers 5"
+    assert sql == "SELECT * FROM customers LIMIT 5"
 
 
 def test_trailing_semicolon_stripped_before_limit():

@@ -7,7 +7,7 @@ BLOCKLIST_PATTERNS = [
     r"\bDROP\b",
     r"\bDELETE\b",
     r"\bALTER\b",
-   "\bUPDATE\b",
+    r"\bUPDATE\b",
     r"\bINSERT\b",
 ]
 
