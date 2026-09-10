@@ -19,10 +19,10 @@ def test_execution_success(file_db, mock_llm):
     assert error is None
     assert results[0][0] == 3
 
-
+#test wants to fail thus nocol is used, it should return first name
 def test_reflection_loop_repairs_query(file_db, fail_then_succeed_llm):
     results, error = execute_with_reflection(
-        file_db, "SELECT * FROM customers;", "list customers"
+        file_db, "SELECT nocol FROM customers;", "list customers"
     )
     assert error is None
     assert results

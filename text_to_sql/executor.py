@@ -3,6 +3,8 @@ import sqlite3
 
 from . import config
 from .llm_client import generate_sqlite_query
+# 1. Import extract_sql at the top of your file
+from .llm_client import extract_sql 
 from .safety import UnsafeQueryError, enforce_limit, validate
 
 REFLECTION_PROMPT_TEMPLATE = """The previous SQL query you generated caused an error. Please fix it.
@@ -34,13 +36,19 @@ def execute_with_reflection(
                         f"Final Error: {e!s}"
                     )
                 print(f"[reflection] Attempt {attempt + 1} failed: {e}. Repairing...")
-                sql_query = generate_sqlite_query(
+                
+                # 2. Capture the raw response from the AI model
+                raw_response = generate_sqlite_query(
                     REFLECTION_PROMPT_TEMPLATE.format(
                         original_prompt=original_prompt,
                         sql_query=sql_query,
                         error=str(e),
                     )
                 )
+                
+                # 3. Clean the markdown backticks out of the string before looping!
+                sql_query = extract_sql(raw_response)
+                
         return None, "Execution failed after maximum retries."
     finally:
         conn.close()
@@ -59,7 +67,7 @@ def run_pipeline(question: str, db_path: str):
     prompt = build_prompt(question, schema)
     raw = generate_sqlite_query(prompt)
 
-    from .llm_client import extract_sql
+    # Note: run_pipeline was already doing it right here!
     sql = extract_sql(raw)
 
     try:
